@@ -2,6 +2,8 @@ package rpp.mf.gov;
 
 import java.time.Duration;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+
 import io.quarkus.elytron.security.common.BcryptUtil;
 import io.smallrye.jwt.build.Jwt;
 import jakarta.inject.Inject;
@@ -16,6 +18,9 @@ public class LoginResource {
 
     @Inject
     UserRepo repo;
+
+    @ConfigProperty(name = "rpp.token.duration")
+    Duration duration;
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -35,12 +40,12 @@ public class LoginResource {
 
     }
 
-    static String generateToken(User user) {
+    String generateToken(User user) {
         return Jwt.issuer("http://localhost:8080")
                 .audience("http://localhost:8080")
                 .subject(user.getName())
                 .groups(user.getRoles())
-                .expiresIn(Duration.ofHours(1))
+                .expiresIn(duration)
                 .sign();
     }
 }
