@@ -7,6 +7,7 @@ import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 
 public class StartupConfig {
+    
     @Inject
     UserRepo repo;
 

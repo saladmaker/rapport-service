@@ -71,7 +71,7 @@ public class LoginResourceTest {
       KeyPair keyPair = keyGen.generateKeyPair();
       privateKey = keyPair.getPrivate();
     } catch (NoSuchAlgorithmException e) {
-      throw new IllegalStateException(e);
+      throw new RuntimeException("error while generating wrong private key");
     }
 
     // invalid token: signed with wrong key
